@@ -39,7 +39,8 @@ Beschreibung dessen, was bewusst nicht Teil des Projekts ist.
 ### Deutsch:
 Beschreibung der Hauptaufgaben und inhaltlichen Komponenten des Projekts.
 
-eine graphische Darstellung(bild) welcher Muskel bei welcher Übung beansprucht wird.
+Das Ziel ist eine ausführliche Erklärung welche Muskeln man trainiert bei welchen Übungen.
+Es wird ein Bild abgebildet sein, mit den jeweiligen Muskeln die beansprucht werden und ein link zu einem Video, welches die Übungen vorzeigt.
 
  
 ---
@@ -64,5 +65,6 @@ Liste der Faktoren, die für den Erfolg des Projekts entscheidend sind.
 
 **Meilensteine:**  
 Wichtige Zwischenereignisse und ihre Termine.
+
 
 
