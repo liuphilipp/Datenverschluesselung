@@ -8,7 +8,7 @@
 
 **Deutsch:**  
 Hier wird der Name des Projekts eingetragen.
-- TrainSmart
+- Datenverschlüsselung
 
 
 ---
@@ -24,7 +24,7 @@ Beschreibung der aktuellen Situation, das Problem oder die Vorgeschichte, die de
 **Projektziele:**  
 Hier werden die quantifizierbaren (messbaren) und nicht quantifizierbaren Ziele des Projekts beschrieben.
 
-Das Ziel der Website ist, ein TrainingsGuide zu erstellen, welcher detailliert die Muskelgruppen anzeigt wenn man bestimmte Übungen macht 
+- Erklärung wie daten verschlüsselt weerden
 
 ---
 **Nicht-Ziele:**  
@@ -39,9 +39,7 @@ Beschreibung dessen, was bewusst nicht Teil des Projekts ist.
 ### Deutsch:
 Beschreibung der Hauptaufgaben und inhaltlichen Komponenten des Projekts.
 
-Das Ziel ist eine ausführliche Erklärung welche Muskeln man trainiert bei welchen Übungen.
-Es wird ein Bild abgebildet sein, mit den jeweiligen Muskeln die beansprucht werden und ein link zu einem Video, welches die Übungen vorzeigt.
-
+- die verschiedenen verschlüsselungstypen und warum verschlüsselung wichtig ist
  
 ---
 
@@ -65,6 +63,7 @@ Liste der Faktoren, die für den Erfolg des Projekts entscheidend sind.
 
 **Meilensteine:**  
 Wichtige Zwischenereignisse und ihre Termine.
+
 
 
 
