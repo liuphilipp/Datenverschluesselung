@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projektvorlage — Datenverschlüsselung</title>
+  <style>
+    :root{
+      --bg:#f6f8fb; --card:#ffffff; --accent:#0f62fe; --muted:#6b7280;
+      --radius:12px; --maxw:900px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0; background:linear-gradient(180deg,var(--bg),#eef3ff 120%);
+      color:#0f1724; padding:28px; display:flex; justify-content:center;
+    }
+    .container{
+      width:100%; max-width:var(--maxw);
+    }
+    header{
+      display:flex; align-items:center; gap:16px; margin-bottom:18px;
+    }
+    header h1{font-size:1.25rem; margin:0}
+    .card{
+      background:var(--card); border-radius:var(--radius); padding:18px; box-shadow:0 6px 18px rgba(12,20,40,0.06);
+      margin-bottom:14px;
+    }
+
+    .top-row{display:flex; gap:12px; align-items:center; margin-bottom:10px;}
+    input[type="text"]{
+      flex:1; padding:10px 12px; border-radius:10px; border:1px solid #e6e9ef; font-size:0.95rem;
+      background:transparent;
+    }
+    .btn{padding:10px 12px; border-radius:10px; border:0; cursor:pointer; font-weight:600}
+    .btn-primary{background:var(--accent); color:#fff}
+    .btn-ghost{background:transparent; color:var(--accent); border:1px solid rgba(15,98,254,0.12)}
+    .flex{display:flex; gap:10px}
+
+    .columns{display:grid; grid-template-columns:1fr 360px; gap:14px}
+    .section{margin-bottom:10px}
+    label{display:block; font-weight:600; margin-bottom:6px}
+    textarea{
+      width:100%; min-height:110px; padding:12px; border-radius:8px; border:1px solid #e6e9ef; resize:vertical;
+      font-size:0.95rem; font-family:inherit; background:transparent;
+    }
+
+    aside .preview{
+      max-height:70vh; overflow:auto; padding:12px; background:linear-gradient(180deg,#ffffff, #fbfdff);
+      border-radius:8px; border:1px solid #eef2ff;
+    }
+    .preview h2{margin:6px 0 8px}
+    .muted{color:var(--muted); font-size:0.95rem}
+    .small{font-size:0.85rem}
+    footer{margin-top:12px; text-align:right; color:var(--muted); font-size:0.85rem}
+
+    /* collapsible styles */
+    .collapsible{border-left:3px solid rgba(15,98,254,0.08); padding:10px 12px; border-radius:8px}
+    .sec-title{display:flex; justify-content:space-between; align-items:center; gap:12px}
+    .sec-title h3{margin:0; font-size:1rem}
+    .toggle{background:transparent; border:0; color:var(--accent); cursor:pointer; font-weight:700}
+
+    @media (max-width:920px){
+      .columns{grid-template-columns:1fr; }
+      aside{order:-1}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <rect x="2" y="2" width="20" height="20" rx="6" fill="#eef6ff"/>
+        <path d="M7 12h10M7 8h6" stroke="#0f62fe" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <h1>Projektvorlage — Datenverschlüsselung</h1>
+        <div class="muted small">Vorlage zum Ausfüllen und Exportieren</div>
+      </div>
+    </header>
+
+    <div class="card top-row">
+      <input id="projectName" type="text" placeholder="Hier wird der Name des Projekts eingetragen." value="Hier wird der Name des Projekts eingetragen." />
+      <div class="flex">
+        <button class="btn btn-primary" id="updatePreview">Vorschau aktualisieren</button>
+        <button class="btn btn-ghost" id="downloadHtml">Als HTML herunterladen</button>
+      </div>
+    </div>
+
+    <div class="columns">
+      <main>
+        <!-- Abschnitt: Ausgangssituation -->
+        <section class="card section">
+          <div class="collapsible">
+            <div class="sec-title">
+              <h3>Ausgangssituation / Problemstellung / Vorgeschichte</h3>
+              <button class="toggle" data-target="ausgang">–</button>
+            </div>
+            <div id="ausgang" class="content">
+              <label for="ausgangText">Deutsch:</label>
+              <textarea id="ausgangText">Beschreibung der aktuellen Situation, das Problem oder die Vorgeschichte, die den Anlass für das Projekt gibt.</textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Abschnitt: Projektziele / Nicht-Ziele -->
+        <section class="card section">
+          <div class="collapsible">
+            <div class="sec-title">
+              <h3>Projektziele / Nicht-Ziele</h3>
+              <button class="toggle" data-target="ziele">–</button>
+            </div>
+            <div id="ziele" class="content">
+              <label for="zieleText">Deutsch — Projektziele:</label>
+              <textarea id="zieleText">Hier werden die quantifizierbaren (messbaren) und nicht quantifizierbaren Ziele des Projekts beschrieben.</textarea>
+
+              <label for="nichtZieleText" style="margin-top:10px">Nicht-Ziele:</label>
+              <textarea id="nichtZieleText">Beschreibung dessen, was bewusst nicht Teil des Projekts ist.</textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Abschnitt: Erklärung wie Daten verschlüsselt werden -->
+        <section class="card section">
+          <div class="collapsible">
+            <div class="sec-title">
+              <h3>Erklärung: Wie werden Daten verschlüsselt?</h3>
+              <button class="toggle" data-target="erklaerung">–</button>
+            </div>
+            <div id="erklaerung" class="content">
+              <label for="erklaerungText">Deutsch:</label>
+              <textarea id="erklaerungText">Hier wird erklärt, wie Daten verschlüsselt werden (z. B. Symmetrische Verschlüsselung, Asymmetrische Verschlüsselung, TLS, Verschlüsselung ruhender Daten, Schlüsselverwaltung, Krypto-Protokolle).</textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Abschnitt: Projektinhalte -->
+        <section class="card section">
+          <div class="collapsible">
+            <div class="sec-title">
+              <h3>Projektinhalte / Project Contents</h3>
+              <button class="toggle" data-target="inhalte">–</button>
+            </div>
+            <div id="inhalte" class="content">
+              <label for="inhalteText">Deutsch:</label>
+              <textarea id="inhalteText">Beschreibung der Hauptaufgaben und inhaltlichen Komponenten des Projekts.</textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Abschnitt: Verschlüsselungstypen -->
+        <section class="card section">
+          <div class="collapsible">
+            <div class="sec-title">
+              <h3>Verschlüsselungstypen &amp; Warum Verschlüsselung wichtig ist</h3>
+              <button class="toggle" data-target="typen">–</button>
+            </div>
+            <div id="typen" class="content">
+              <label for="typenText">Deutsch:</label>
+              <textarea id="typenText">Die verschiedenen Verschlüsselungstypen (z. B. symmetrisch: AES; asymmetrisch: RSA, ECC; hybride Verfahren; Hashfunktionen) und warum Verschlüsselung wichtig ist: Schutz der Vertraulichkeit, Integrität und Authentizität von Daten; rechtliche Anforderungen; Vertrauensaufbau; Schadensbegrenzung bei Datenverlust.</textarea>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <aside>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+            <strong>Live Vorschau</strong>
+            <div class="muted small">Bearbeite die Felder und klicke "Vorschau aktualisieren"</div>
+          </div>
+          <div class="preview" id="preview">
+            <!-- Vorschau wird per JS erzeugt -->
+            <h2 id="pv_title">Hier wird der Name des Projekts eingetragen.</h2>
+            <p class="muted small">Kurze Zusammenfassung:</p>
+            <section>
+              <h3>Ausgangssituation</h3>
+              <p id="pv_ausgang">Beschreibung der aktuellen Situation, das Problem oder die Vorgeschichte, die den Anlass für das Projekt gibt.</p>
+            </section>
+            <section>
+              <h3>Projektziele</h3>
+              <p id="pv_ziele">Hier werden die quantifizierbaren (messbaren) und nicht quantifizierbaren Ziele des Projekts beschrieben.</p>
+              <h4>Nicht-Ziele</h4>
+              <p id="pv_nichtziele">Beschreibung dessen, was bewusst nicht Teil des Projekts ist.</p>
+            </section>
+            <section>
+              <h3>Wie werden Daten verschlüsselt?</h3>
+              <p id="pv_erklaerung">Hier wird erklärt, wie Daten verschlüsselt werden (z. B. Symmetrische Verschlüsselung, Asymmetrische Verschlüsselung, TLS, Verschlüsselung ruhender Daten, Schlüsselverwaltung, Krypto-Protokolle).</p>
+            </section>
+            <section>
+              <h3>Projektinhalte</h3>
+              <p id="pv_inhalte">Beschreibung der Hauptaufgaben und inhaltlichen Komponenten des Projekts.</p>
+            </section>
+            <section>
+              <h3>Verschlüsselungstypen &amp; Bedeutung</h3>
+              <p id="pv_typen">Die verschiedenen Verschlüsselungstypen (z. B. symmetrisch: AES; asymmetrisch: RSA, ECC; hybride Verfahren; Hashfunktionen) und warum Verschlüsselung wichtig ist: Schutz der Vertraulichkeit, Integrität und Authentizität von Daten; rechtliche Anforderungen; Vertrauensaufbau; Schadensbegrenzung bei Datenverlust.</p>
+            </section>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <strong>Tipps</strong>
+          <ul class="muted small" style="padding-left:16px; margin-top:8px">
+            <li>Formuliere Ziele möglichst messbar (SMART).</li>
+            <li>Bei Verschlüsselung: Schlüsselmanagement dokumentieren.</li>
+            <li>Trenne "Was" (Ziele) und "Wie" (Inhalte/Technik).</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <span class="muted">Vorlage erstellt — einfach editierbar.</span>
+    </footer>
+  </div>
+
+  <script>
+    // Hilfsfunktionen
+    function updatePreviewFromInputs() {
+      document.getElementById('pv_title').textContent = document.getElementById('projectName').value || 'Projektname';
+      document.getElementById('pv_ausgang').textContent = document.getElementById('ausgangText').value;
+      document.getElementById('pv_ziele').textContent = document.getElementById('zieleText').value;
+      document.getElementById('pv_nichtziele').textContent = document.getElementById('nichtZieleText').value;
+      document.getElementById('pv_erklaerung').textContent = document.getElementById('erklaerungText').value;
+      document.getElementById('pv_inhalte').textContent = document.getElementById('inhalteText').value;
+      document.getElementById('pv_typen').textContent = document.getElementById('typenText').value;
+    }
+
+    // initial
+    updatePreviewFromInputs();
+
+    // Buttons
+    document.getElementById('updatePreview').addEventListener('click', function(){
+      updatePreviewFromInputs();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Collapsible toggles
+    document.querySelectorAll('.toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.getAttribute('data-target');
+        const el = document.getElementById(id);
+        if(!el) return;
+        if(el.style.display === 'none') {
+          el.style.display = '';
+          btn.textContent = '–';
+        } else {
+          el.style.display = 'none';
+          btn.textContent = '+';
+        }
+      });
+    });
+
+    // Download as HTML (generates a simple standalone HTML snapshot of the preview)
+    document.getElementById('downloadHtml').addEventListener('click', function(){
+      updatePreviewFromInputs();
+      const title = document.getElementById('projectName').value || 'Projekt';
+      const html = generateExportHtml(title,
+        document.getElementById('ausgangText').value,
+        document.getElementById('zieleText').value,
+        document.getElementById('nichtZieleText').value,
+        document.getElementById('erklaerungText').value,
+        document.getElementById('inhalteText').value,
+        document.getElementById('typenText').value
+      );
+      const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = (title.replace(/[^a-z0-9_\-\.]/gi, '_') || 'projekt') + '.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    function escapeHtml(s){
+      return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+
+    function generateExportHtml(title, ausgang, ziele, nichtziele, erklaerung, inhalte, typen){
+      const now = new Date().toLocaleString('de-DE');
+      return `<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>${escapeHtml(title)}</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;padding:28px;color:#0b1220;background:#f5f7fb}
+    .wrap{max-width:900px;margin:0 auto;background:#fff;padding:24px;border-radius:10px;box-shadow:0 6px 20px rgba(12,20,40,0.06)}
+    h1{margin-top:0}
+    section{margin-top:18px}
+    .meta{color:#6b7280;font-size:0.9rem}
+    pre{white-space:pre-wrap;background:#fbfdff;border-left:4px solid #e6f0ff;padding:10px 12px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>${escapeHtml(title)}</h1>
+    <div class="meta">Export: ${now}</div>
+
+    <section>
+      <h2>Ausgangssituation / Problemstellung / Vorgeschichte</h2>
+      <pre>${escapeHtml(ausgang)}</pre>
+    </section>
+
+    <section>
+      <h2>Projektziele</h2>
+      <pre>${escapeHtml(ziele)}</pre>
+      <h3>Nicht-Ziele</h3>
+      <pre>${escapeHtml(nichtziele)}</pre>
+    </section>
+
+    <section>
+      <h2>Erklärung: Wie werden Daten verschlüsselt?</h2>
+      <pre>${escapeHtml(erklaerung)}</pre>
+    </section>
+
+    <section>
+      <h2>Projektinhalte / Project Contents</h2>
+      <pre>${escapeHtml(inhalte)}</pre>
+    </section>
+
+    <section>
+      <h2>Verschlüsselungstypen &amp; Bedeutung</h2>
+      <pre>${escapeHtml(typen)}</pre>
+    </section>
+
+  </div>
+</body>
+</html>`;
+    }
+
+    // Allow pressing Ctrl+S to download snapshot
+    window.addEventListener('keydown', function(e){
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+        e.preventDefault();
+        document.getElementById('downloadHtml').click();
+      }
+    });
+  </script>
+</body>
+</html>
