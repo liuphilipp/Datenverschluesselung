@@ -4,43 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asymmetrische Verschlüsselung</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light">
 
-<header class="bg-primary text-white text-center py-4 mb-4">
-    <h1>Asymmetrische Verschlüsselung</h1>
-    <p>RSA & ECC – öffentliche & private Schlüssel</p>
-</header>
+<body class="bg-light pt-5">
 
-<main class="container">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Datenverschlüsselung</a>
 
-    <div class="card shadow-sm">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Start</a></li>
+                <li class="nav-item"><a class="nav-link" href="symmetrisch.html">Symmetrisch</a></li>
+                <li class="nav-item"><a class="nav-link active" href="asymmetrisch.html">Asymmetrisch</a></li>
+                <li class="nav-item"><a class="nav-link" href="hybrid.html">Hybrid</a></li>
+                <li class="nav-item"><a class="nav-link" href="hash.html">Hash</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-4">
+
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
+            <h1 class="mb-4">Asymmetrische Verschlüsselung</h1>
+            <p class="lead">RSA & ECC – öffentliche und private Schlüssel für sichere Kommunikation</p>
+
             <h2>Was ist asymmetrische Verschlüsselung?</h2>
             <p>
-                Hier werden zwei Schlüssel verwendet: ein öffentlicher und ein privater.
-                Daten, die mit dem öffentlichen Schlüssel verschlüsselt werden, können
-                nur mit dem privaten Schlüssel entschlüsselt werden.
+                Bei der asymmetrischen Verschlüsselung werden zwei Schlüssel verwendet: ein <strong>öffentlicher</strong>
+                Schlüssel, der frei verteilt werden kann, und ein <strong>privater</strong> Schlüssel, der geheim bleibt.
+                Daten, die mit dem öffentlichen Schlüssel verschlüsselt werden, können nur mit dem privaten Schlüssel entschlüsselt werden.
             </p>
 
             <h2>Typische Verfahren</h2>
             <ul>
-                <li>RSA</li>
+                <li>RSA (Rivest-Shamir-Adleman)</li>
                 <li>ECC (Elliptic Curve Cryptography)</li>
+            </ul>
+
+            <h2>Anwendungsbereiche</h2>
+            <p>
+                Asymmetrische Verschlüsselung wird vor allem dort eingesetzt, wo ein sicherer Schlüsselaustausch nötig ist.
+                Typische Anwendungen sind:
+            </p>
+            <ul>
+                <li>Sichere E-Mail-Verschlüsselung (z.B. PGP/GPG)</li>
+                <li>Digitale Signaturen</li>
+                <li>Schlüsselaustausch in Hybridverfahren</li>
+                <li>SSL/TLS-Verbindungen für sichere Webseiten</li>
             </ul>
 
             <h2>Vor- und Nachteile</h2>
             <p>
-                Vorteil: Sicherer Schlüsselaustausch<br>
-                Nachteil: Langsamer als symmetrische Verfahren
+                <strong>Vorteile:</strong> Sicherer Schlüsselaustausch, hohe Sicherheit bei kleinen Datenmengen.<br>
+                <strong>Nachteile:</strong> Langsamer als symmetrische Verfahren, für große Datenmengen weniger geeignet.
             </p>
 
-            <a href="datenverschluesslung2.html" class="btn btn-primary mt-3">Zurück zur Übersicht</a>
+            <h2>Fazit</h2>
+            <p>
+                Asymmetrische Verschlüsselung bildet die Grundlage moderner Sicherheitstechnologien.
+                In Kombination mit symmetrischen Verfahren (Hybridverfahren) lassen sich sowohl Geschwindigkeit als auch Sicherheit optimieren.
+            </p>
+
+            <div class="text-center mt-4">
+                <a href="index.html" class="btn btn-outline-primary">← Zurück zur Startseite</a>
+            </div>
+
         </div>
     </div>
 
 </main>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
