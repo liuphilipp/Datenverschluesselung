@@ -10,27 +10,104 @@
 
 <header class="bg-primary text-white text-center py-4 mb-4">
     <h1>Hashfunktionen</h1>
-    <p>Einwegfunktionen für Datensicherheit</p>
+    <p class="mb-0">Einwegfunktionen für Datensicherheit</p>
 </header>
 
 <main class="container">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h2>Was sind Hashfunktionen?</h2>
             <p>
-                Hashfunktionen wandeln Daten in einen festen, nicht umkehrbaren Wert um.
+                Hashfunktionen wandeln beliebig große Daten (z. B. Texte oder Dateien) in einen festen,
+                scheinbar zufälligen Wert um, den sogenannten <strong>Hashwert</strong>.
+                Dieser Prozess ist <strong>nicht umkehrbar</strong>: Aus dem Hash kann der ursprüngliche
+                Inhalt praktisch nicht rekonstruiert werden.
             </p>
+            <p>
+                Schon kleinste Änderungen an den Eingabedaten führen zu einem komplett anderen Hashwert.
+                Dieses Verhalten macht Hashfunktionen besonders nützlich für Sicherheitsanwendungen.
+            </p>
+        </div>
+    </div>
 
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2>Wichtige Eigenschaften</h2>
+            <ul>
+                <li><strong>Deterministisch:</strong> Gleiche Eingabe → gleicher Hashwert</li>
+                <li><strong>Kollisionsarm:</strong> Zwei unterschiedliche Eingaben erzeugen kaum denselben Hash</li>
+                <li><strong>Schnell berechenbar:</strong> Auch für große Datenmengen</li>
+                <li><strong>Einwegfunktion:</strong> Rückrechnung ist praktisch unmöglich</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
             <h2>Einsatzgebiete</h2>
             <ul>
-                <li>Passwortspeicherung</li>
-                <li>Integritätsprüfung von Dateien</li>
-                <li>Digitale Signaturen</li>
+                <li>Passwortspeicherung (z. B. mit Salt und Key Stretching)</li>
+                <li>Integritätsprüfung von Dateien (Downloads, Backups)</li>
+                <li>Digitale Signaturen und Zertifikate</li>
+                <li>Blockchain- und Kryptowährungssysteme</li>
             </ul>
-
-            <a href="datenverschluesslung2.html" class="btn btn-primary mt-3">Zurück zur Übersicht</a>
         </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2>Beispiele gängiger Hashfunktionen</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Algorithmus</th>
+                            <th>Hashlänge</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MD5</td>
+                            <td>128 Bit</td>
+                            <td class="text-danger">Unsicher</td>
+                        </tr>
+                        <tr>
+                            <td>SHA-1</td>
+                            <td>160 Bit</td>
+                            <td class="text-warning">Veraltet</td>
+                        </tr>
+                        <tr>
+                            <td>SHA-256</td>
+                            <td>256 Bit</td>
+                            <td class="text-success">Sicher</td>
+                        </tr>
+                        <tr>
+                            <td>bcrypt</td>
+                            <td>variabel</td>
+                            <td class="text-success">Sehr sicher (Passwörter)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2>Sicherheitshinweis</h2>
+            <p>
+                Für die Passwortspeicherung sollten <strong>keine schnellen Hashfunktionen</strong>
+                wie MD5 oder SHA-1 verwendet werden. Stattdessen nutzt man spezielle Verfahren
+                wie <strong>bcrypt</strong>, <strong>scrypt</strong> oder <strong>Argon2</strong>,
+                die gezielt langsam sind und Angriffe erschweren.
+            </p>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <a href="datenverschluesslung2.html" class="btn btn-primary">Zurück zur Übersicht</a>
     </div>
 
 </main>
