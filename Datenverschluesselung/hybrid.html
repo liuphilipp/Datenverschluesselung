@@ -5,35 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hybride Verschlüsselung</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light">
+<body class="bg-light pt-5">
 
-<header class="bg-primary text-white text-center py-4 mb-4">
-    <h1>Hybride Verschlüsselung</h1>
-    <p>Kombination aus symmetrisch & asymmetrisch</p>
-</header>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Datenverschlüsselung</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Start</a></li>
+                <li class="nav-item"><a class="nav-link" href="symmetrisch.html">Symmetrisch</a></li>
+                <li class="nav-item"><a class="nav-link" href="asymmetrisch.html">Asymmetrisch</a></li>
+                <li class="nav-item"><a class="nav-link active" href="hybrid.html">Hybrid</a></li>
+                <li class="nav-item"><a class="nav-link" href="hash.html">Hash</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<main class="container">
+<main class="container mt-4">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
+            <h1 class="mb-4">Hybride Verschlüsselung</h1>
+            <p class="lead">Kombination aus symmetrischer und asymmetrischer Verschlüsselung für maximale Sicherheit und Effizienz.</p>
+
             <h2>Was ist hybride Verschlüsselung?</h2>
             <p>
-                Hybride Verfahren kombinieren die Vorteile der symmetrischen und
-                asymmetrischen Verschlüsselung.
+                Hybride Verfahren kombinieren die Geschwindigkeit und Effizienz der symmetrischen Verschlüsselung
+                mit der sicheren Schlüsselverteilung der asymmetrischen Verschlüsselung.
+                So können Daten schnell übertragen und gleichzeitig sicher geschützt werden.
             </p>
 
-            <h2>Beispiel</h2>
+            <h2>Beispiele und Einsatz</h2>
             <p>
-                HTTPS nutzt asymmetrische Verfahren für den sicheren Schlüsselaustausch
-                und danach symmetrische Verschlüsselung für die Datenübertragung.
+                Das bekannteste Beispiel ist HTTPS. Hier wird ein asymmetrisches Verfahren verwendet,
+                um den Sitzungsschlüssel sicher auszutauschen. Danach erfolgt die eigentliche Datenübertragung
+                symmetrisch, was deutlich schneller ist.
+            </p>
+            <ul>
+                <li>Sichere Internetverbindungen (HTTPS/TLS)</li>
+                <li>VPN-Verbindungen</li>
+                <li>Cloud-Datenverschlüsselung</li>
+                <li>Messenger-Dienste mit End-to-End-Verschlüsselung</li>
+            </ul>
+
+            <h2>Vorteile</h2>
+            <ul>
+                <li>Schnelle Datenübertragung</li>
+                <li>Sichere Schlüsselverwaltung</li>
+                <li>Kombination der Stärken von Symmetrisch und Asymmetrisch</li>
+            </ul>
+
+            <h2>Fazit</h2>
+            <p>
+                Hybride Verschlüsselung ist heute der Standard für sichere digitale Kommunikation.
+                Sie verbindet die Vorteile beider Verfahren und wird in fast allen sicheren Online-Diensten eingesetzt.
             </p>
 
-            <a href="datenverschluesslung2.html" class="btn btn-primary mt-3">Zurück zur Übersicht</a>
+            <div class="text-center mt-4">
+                <a href="index.html" class="btn btn-outline-primary">← Zurück zur Startseite</a>
+            </div>
+
         </div>
     </div>
 
 </main>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
