@@ -1,4 +1,6 @@
+
 body {
+     
     font-family: Arial, sans-serif;
     line-height: 1.7;
     background: #f4f6fb;
@@ -7,43 +9,48 @@ body {
     color: #222;
 }
 
-header {
-    background: #0f62fe;
-    color: white;
-    padding: 25px;
-    text-align: center;
+
+.navbar {
+    background-color: #000000 !important;
 }
+
+.navbar .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar .nav-link:hover {
+    color: #f1f1f1 !important;
+}
+
 
 main {
     max-width: 900px;
     margin: 30px auto;
-    background: white;
+    background-color: #ffffff;
     padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-h2 {
-    color: #0f62fe;
+
+h1, h2, h3 {
+    color: #212529; /* schwarz statt blau */
     margin-top: 25px;
 }
 
-.box {
-    background: #e8eefc;
-    border-left: 4px solid #0f62fe;
-    padding: 15px;
-    margin-top: 10px;
-    border-radius: 5px;
-}
 
 ul {
     margin-left: 25px;
 }
 
-body {
-    background-image: url("images/hintergrund.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+
+.btn-back {
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    background-color: transparent;
+}
+
+.btn-back:hover {
+    background-color: #ffffff;
+    color: #000000;
 }
