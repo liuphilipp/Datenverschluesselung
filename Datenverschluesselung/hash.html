@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hashfunktionen – Überblick</title>
 
-    <!-- Bootstrap CSS -->
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-light pt-5">
+<body class="bg-light">
 
-<!-- NAVBAR -->
+<header class="bg-dark text-white text-center py-4 mb-4">
+    <h1>Hashfunktionen</h1>
+    <p>Hashfunktionen werden in vielen Bereichen der IT-Sicherheit eingesetzt:</p>
+</header>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
         <a class="navbar-brand" href="index.html">Datenverschlüsselung</a>
@@ -23,7 +28,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="datenverschluesslung2.html">Start</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Start</a></li>
                 <li class="nav-item"><a class="nav-link" href="symmetrisch.html">Symmetrisch</a></li>
                 <li class="nav-item"><a class="nav-link" href="asymmetrisch.html">Asymmetrisch</a></li>
                 <li class="nav-item"><a class="nav-link" href="hybrid.html">Hybrid</a></li>
@@ -33,66 +38,63 @@
     </div>
 </nav>
 
-<main class="container mt-4">
+<main class="container">
 
-    <section class="mb-5">
-        <div class="card shadow-sm">
-            <div class="card-body">
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-                <h1 class="mb-4">Hashfunktionen</h1>
+            <h2>Was sind Hashfunktionen?</h2>
+            <p>
+                Hashfunktionen sind spezielle mathematische Funktionen, die Daten beliebiger Länge
+                in einen festen, scheinbar zufälligen Wert umwandeln. Dieser Wert wird Hashwert genannt.
+                Hashfunktionen sind sogenannte Einwegfunktionen, da der ursprüngliche Text aus dem Hashwert
+                praktisch nicht wiederhergestellt werden kann.
+            </p>
 
-                <h2>Was sind Hashfunktionen?</h2>
-                <p>
-                    Hashfunktionen sind spezielle mathematische Funktionen, die Daten beliebiger Länge
-                    in einen festen, scheinbar zufälligen Wert umwandeln. Dieser Wert wird <strong>Hashwert</strong>
-                    genannt. Hashfunktionen sind sogenannte <strong>Einwegfunktionen</strong>, da der ursprüngliche
-                    Text aus dem Hashwert praktisch nicht wiederhergestellt werden kann.
-                </p>
+            <p>
+                Bereits kleinste Änderungen an den Eingabedaten führen zu einem völlig anderen Hashwert.
+                Dadurch eignen sich Hashfunktionen besonders gut für Sicherheitsanwendungen.
+            </p>
 
-                <p>
-                    Bereits kleinste Änderungen an den Eingabedaten führen zu einem völlig anderen Hashwert.
-                    Dadurch eignen sich Hashfunktionen besonders gut für Sicherheitsanwendungen.
-                </p>
+            <h2>Wichtige Eigenschaften</h2>
+            <ul>
+                <li>Gleiche Eingabe erzeugt immer den gleichen Hashwert</li>
+                <li>Kleine Änderungen erzeugen stark unterschiedliche Hashwerte</li>
+                <li>Der ursprüngliche Text kann nicht zurückgerechnet werden</li>
+                <li>Schnelle Berechnung auch bei großen Datenmengen</li>
+            </ul>
 
-                <h2>Wichtige Eigenschaften</h2>
-                <ul>
-                    <li>Gleiche Eingabe erzeugt immer den gleichen Hashwert</li>
-                    <li>Kleine Änderungen erzeugen stark unterschiedliche Hashwerte</li>
-                    <li>Der ursprüngliche Text kann nicht zurückgerechnet werden</li>
-                    <li>Schnelle Berechnung auch bei großen Datenmengen</li>
-                </ul>
+            <h2>Einsatzgebiete von Hashfunktionen</h2>
+            <ul>
+                <li>Passwortspeicherung (nicht das Passwort selbst, sondern der Hash)</li>
+                <li>Überprüfung der Dateiintegrität</li>
+                <li>Digitale Signaturen und Zertifikate</li>
+                <li>Blockchain- und Kryptowährungssysteme</li>
+            </ul>
 
-                <h2>Einsatzgebiete von Hashfunktionen</h2>
-                <p>Hashfunktionen werden in vielen Bereichen der IT-Sicherheit eingesetzt:</p>
-                <ul>
-                    <li>Passwortspeicherung (nicht das Passwort selbst, sondern der Hash)</li>
-                    <li>Überprüfung der Dateiintegrität</li>
-                    <li>Digitale Signaturen und Zertifikate</li>
-                    <li>Blockchain- und Kryptowährungssysteme</li>
-                </ul>
+            <h2>Beispiele für Hashalgorithmen</h2>
+            <ul>
+                <li>MD5 – heute unsicher</li>
+                <li>SHA-1 – veraltet</li>
+                <li>SHA-256 – weit verbreitet und sicher</li>
+                <li>bcrypt / Argon2 – speziell für Passwörter</li>
+            </ul>
 
-                <h2>Beispiele für Hashalgorithmen</h2>
-                <ul>
-                    <li>MD5 – heute unsicher</li>
-                    <li>SHA-1 – veraltet</li>
-                    <li>SHA-256 – weit verbreitet und sicher</li>
-                    <li>bcrypt / Argon2 – speziell für Passwörter</li>
-                </ul>
+            <h2>Fazit</h2>
+            <p>
+                Hashfunktionen sind ein unverzichtbarer Bestandteil moderner IT-Sicherheit.
+                Sie ermöglichen sichere Passwortspeicherung, Integritätsprüfungen und bilden
+                die Grundlage vieler kryptografischer Verfahren.
+            </p>
 
-                <h2>Fazit</h2>
-                <p>
-                    Hashfunktionen sind ein unverzichtbarer Bestandteil moderner IT-Sicherheit.
-                    Sie ermöglichen sichere Passwortspeicherung, Integritätsprüfungen und bilden
-                    die Grundlage vieler kryptografischer Verfahren.
-                </p>
+            <a href="index.html" class="btn btn-primary mt-3">Zurück zur Übersicht</a>
 
-            </div>
         </div>
-    </section>
+    </div>
 
 </main>
 
-<!-- Bootstrap JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
