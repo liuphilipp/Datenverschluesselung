@@ -74,14 +74,140 @@
             </p>
 
             
+            <hr class="my-5">
 
+        <h2>Hybrid-Demo (RSA + AES)</h2>
+
+        <button class="btn btn-primary mb-3" onclick="generateHybridKeys()">
+            RSA-Schlüssel generieren
+        </button>
+
+        <div class="mb-3">
+            <label class="form-label">Text eingeben:</label>
+            <input type="text" id="hybridPlainText" class="form-control">
         </div>
-    </div>
+
+        <button class="btn btn-success mb-3" onclick="encryptHybrid()">
+            Hybrid verschlüsseln
+        </button>
+
+        <button class="btn btn-warning mb-3 ms-2" onclick="decryptHybrid()">
+            Hybrid entschlüsseln
+        </button>
+
+        <div>
+            <strong>Ergebnis:</strong>
+            <p id="hybridOutput" class="bg-light p-2 rounded"></p>
+        </div>
+                    
+                </div>
+            </div>
 
 </main>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let hybridPublicKey;
+let hybridPrivateKey;
+let encryptedAESKey;
+let encryptedMessage;
+let iv;
 
+async function generateHybridKeys() {
+    const keyPair = await crypto.subtle.generateKey(
+        {
+            name: "RSA-OAEP",
+            modulusLength: 2048,
+            publicExponent: new Uint8Array([1, 0, 1]),
+            hash: "SHA-256"
+        },
+        true,
+        ["encrypt", "decrypt"]
+    );
+
+    hybridPublicKey = keyPair.publicKey;
+    hybridPrivateKey = keyPair.privateKey;
+
+    document.getElementById("hybridOutput").textContent =
+        "RSA-Schlüssel generiert!";
+}
+
+async function encryptHybrid() {
+    const text = document.getElementById("hybridPlainText").value;
+
+    // 1️⃣ AES-Schlüssel erzeugen
+    const aesKey = await crypto.subtle.generateKey(
+        { name: "AES-GCM", length: 256 },
+        true,
+        ["encrypt", "decrypt"]
+    );
+
+    iv = crypto.getRandomValues(new Uint8Array(12));
+
+    // 2️⃣ Nachricht mit AES verschlüsseln
+    encryptedMessage = await crypto.subtle.encrypt(
+        { name: "AES-GCM", iv: iv },
+        aesKey,
+        new TextEncoder().encode(text)
+    );
+
+    // 3️⃣ AES-Schlüssel exportieren
+    const rawKey = await crypto.subtle.exportKey("raw", aesKey);
+
+    // 4️⃣ AES-Schlüssel mit RSA verschlüsseln
+    encryptedAESKey = await crypto.subtle.encrypt(
+        { name: "RSA-OAEP" },
+        hybridPublicKey,
+        rawKey
+    );
+
+    const encryptedMessageBase64 =
+    btoa(String.fromCharCode(...new Uint8Array(encryptedMessage)));
+
+    const encryptedKeyBase64 =
+    btoa(String.fromCharCode(...new Uint8Array(encryptedAESKey)));
+
+    document.getElementById("hybridOutput").textContent =
+    "Verschlüsselte Nachricht:\n\n" +
+    encryptedMessageBase64 +
+    "\n\nVerschlüsselter AES-Schlüssel:\n\n" +
+    encryptedKeyBase64;
+}
+
+async function decryptHybrid() {
+    try {
+        // 1️⃣ AES-Schlüssel mit privatem RSA-Schlüssel entschlüsseln
+        const decryptedKey = await crypto.subtle.decrypt(
+            { name: "RSA-OAEP" },
+            hybridPrivateKey,
+            encryptedAESKey
+        );
+
+        const aesKey = await crypto.subtle.importKey(
+            "raw",
+            decryptedKey,
+            { name: "AES-GCM" },
+            false,
+            ["decrypt"]
+        );
+
+        // 2️⃣ Nachricht mit AES entschlüsseln
+        const decryptedMessage = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv: iv },
+            aesKey,
+            encryptedMessage
+        );
+
+        const result = new TextDecoder().decode(decryptedMessage);
+
+        document.getElementById("hybridOutput").textContent = result;
+
+    } catch (e) {
+        document.getElementById("hybridOutput").textContent =
+            "Fehler beim Entschlüsseln!";
+    }
+}
+</script>
 </body>
 </html>
