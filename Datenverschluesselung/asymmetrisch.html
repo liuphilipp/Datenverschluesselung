@@ -51,7 +51,7 @@
 <main class="container">
 
 
-    </div>
+    
     <div class="card shadow-sm">
         <div class="card-body">
             <h2>Was ist asymmetrische Verschlüsselung?</h2>
@@ -73,10 +73,88 @@
                 Nachteil: Langsamer als symmetrische Verfahren
             </p>
 
-           
+            <hr class="my-5">
+
+    <h2>RSA-Demo (Asymmetrische Verschlüsselung)</h2>
+
+    <button class="btn btn-primary mb-3" onclick="generateKeys()">
+        Schlüsselpaar generieren
+    </button>
+
+    <div class="mb-3">
+        <label class="form-label">Text eingeben:</label>
+        <input type="text" id="rsaPlainText" class="form-control">
     </div>
 
-</main>
+    <button class="btn btn-success mb-3" onclick="encryptRSA()">
+        Mit öffentlichem Schlüssel verschlüsseln
+    </button>
 
+    <button class="btn btn-warning mb-3 ms-2" onclick="decryptRSA()">
+        Mit privatem Schlüssel entschlüsseln
+    </button>
+
+    <div>
+        <strong>Ergebnis:</strong>
+        <p id="rsaOutput" class="bg-light p-2 rounded"></p>
+    </div>
+            </div>
+        </div>
+
+</main>
+<script>
+let publicKey;
+let privateKey;
+
+async function generateKeys() {
+    const keyPair = await crypto.subtle.generateKey(
+        {
+            name: "RSA-OAEP",
+            modulusLength: 2048,
+            publicExponent: new Uint8Array([1, 0, 1]),
+            hash: "SHA-256"
+        },
+        true,
+        ["encrypt", "decrypt"]
+    );
+
+    publicKey = keyPair.publicKey;
+    privateKey = keyPair.privateKey;
+
+    document.getElementById("rsaOutput").textContent =
+        "Schlüsselpaar erfolgreich generiert!";
+}
+
+async function encryptRSA() {
+    const text = document.getElementById("rsaPlainText").value;
+
+    const encrypted = await crypto.subtle.encrypt(
+        { name: "RSA-OAEP" },
+        publicKey,
+        new TextEncoder().encode(text)
+    );
+
+    const result = btoa(String.fromCharCode(...new Uint8Array(encrypted)));
+    document.getElementById("rsaOutput").textContent = result;
+}
+
+async function decryptRSA() {
+    try {
+        const encryptedText = document.getElementById("rsaOutput").textContent;
+        const encryptedBytes = Uint8Array.from(atob(encryptedText), c => c.charCodeAt(0));
+
+        const decrypted = await crypto.subtle.decrypt(
+            { name: "RSA-OAEP" },
+            privateKey,
+            encryptedBytes
+        );
+
+        const result = new TextDecoder().decode(decrypted);
+        document.getElementById("rsaOutput").textContent = result;
+    } catch (e) {
+        document.getElementById("rsaOutput").textContent = "Fehler beim Entschlüsseln!";
+    }
+}
+</script>
 </body>
 </html>
