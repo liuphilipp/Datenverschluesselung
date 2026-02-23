@@ -1,61 +1,144 @@
+/* ========== GLOBAL STYLE ========== */
 
 body {
-     
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.7;
-    background: #f4f6fb;
     margin: 0;
     padding: 0;
-    color: #222;
+    color: #ffffff;
+
+    /* Hintergrundbild */
+    background: linear-gradient(rgba(10,15,35,0.85), rgba(10,15,35,0.85)),
+        url("https://www.kaspersky.de/content/de-de/images/repository/isc/2021/encryption-1.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
 
+/* ========== NAVBAR ========== */
 
 .navbar {
-    background-color: #000000 !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(10px);
 }
 
 .navbar .nav-link {
     color: #ffffff !important;
+    transition: 0.3s;
 }
 
 .navbar .nav-link:hover {
-    color: #f1f1f1 !important;
+    color: #00d4ff !important;
 }
 
+/* ========== GLASS CARD ========== */
 
-main {
-    max-width: 900px;
-    margin: 30px auto;
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.card {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    color: #ffffff;
+    transition: 0.3s ease;
 }
 
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* ========== MAIN CONTAINER ========== */
+
+main.container {
+    max-width: 1000px;
+}
+
+/* ========== HEADINGS ========== */
 
 h1, h2, h3 {
-    color: #212529; /* schwarz statt blau */
-   
+    font-weight: 600;
 }
 
+/* ========== LISTEN ========== */
 
 ul {
-    margin-left: 25px;
+    margin-left: 20px;
 }
 
+/* ========== BUTTONS ========== */
 
-.btn-back {
+.btn-success {
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    border: none;
+}
+
+.btn-success:hover {
+    opacity: 0.85;
+}
+
+.btn-warning {
+    background: linear-gradient(45deg, #ffb347, #ffcc33);
+    border: none;
+    color: #000;
+}
+
+.btn-warning:hover {
+    opacity: 0.85;
+}
+
+/* ========== INPUT FELDER ========== */
+
+.form-control {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
     color: #ffffff;
-    border: 1px solid #ffffff;
-    background-color: transparent;
 }
 
-.btn-back:hover {
-    background-color: #ffffff;
-    color: #000000;
+.form-control::placeholder {
+    color: rgba(255,255,255,0.6);
 }
 
-header h1,
-header p {
+.form-control:focus {
+    background: rgba(255,255,255,0.15);
+    border-color: #00d4ff;
+    box-shadow: none;
+}
+
+/* ========== HEADER (Unterseiten) ========== */
+
+header {
+    background: transparent !important;
+}
+
+header h1, header p {
     color: #ffffff !important;
+}
+
+/* ========== OUTPUT BOXEN ========== */
+
+p.bg-light {
+    background: rgba(255,255,255,0.1) !important;
+    color: #ffffff;
+}
+
+.password-box {
+    background: white;
+    max-width: 500px;
+    margin: 40px auto;   /* macht es mittig */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.password-box input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+#strength {
+    margin-top: 15px;
+    font-weight: bold;
 }
