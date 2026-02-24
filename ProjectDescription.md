@@ -40,6 +40,7 @@ Beschreibung dessen, was bewusst nicht Teil des Projekts ist.
 Beschreibung der Hauptaufgaben und inhaltlichen Komponenten des Projekts.
 
 - die verschiedenen verschlüsselungstypen und warum verschlüsselung wichtig ist
+- Passwort tester
  
 ---
 
@@ -63,6 +64,7 @@ Liste der Faktoren, die für den Erfolg des Projekts entscheidend sind.
 
 **Meilensteine:**  
 Wichtige Zwischenereignisse und ihre Termine.
+
 
 
 
