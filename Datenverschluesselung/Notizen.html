@@ -2,129 +2,67 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Notizen App mit Verschlüsselung</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    textarea, input {
-      width: 80%;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      border: none;
-      border-radius: 8px;
-      background: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-
-    .note {
-      background: #444;
-      margin: 10px;
-      padding: 10px;
-      border-radius: 8px;
-    }
-  </style>
+  <title>Notizen App</title>
 </head>
 <body>
 
-<h1>🔐 Notizen App</h1>
+<h2>🔐 Notizen</h2>
 
-<textarea id="noteInput" placeholder="Schreibe eine Notiz..."></textarea><br>
-<input id="password" placeholder="Passwort"><br>
+<textarea id="noteInput" placeholder="Deine Notiz"></textarea><br><br>
+<input id="password" placeholder="Passwort"><br><br>
 
 <button onclick="saveNote()">Speichern</button>
 <button onclick="showNotes()">Anzeigen</button>
-<button onclick="deleteNotes()">Alle löschen</button>
+<button onclick="deleteNotes()">Löschen</button>
 
 <div id="notesContainer"></div>
 
 <script>
 
-// =========================
-// VERSCHLÜSSELUNG
-// =========================
-
+// Verschlüsselung
 function encrypt(text, password) {
   let result = "";
-
-  // wir nehmen die länge vom passwort als "key"
   let shift = password.length;
 
   for (let i = 0; i < text.length; i++) {
-    let charCode = text.charCodeAt(i);
-
-    // buchstabe verschieben
-    let newChar = charCode + shift;
-
-    result += String.fromCharCode(newChar);
+    result += String.fromCharCode(text.charCodeAt(i) + shift);
   }
 
   return result;
 }
 
+// Entschlüsselung
 function decrypt(text, password) {
   let result = "";
   let shift = password.length;
 
   for (let i = 0; i < text.length; i++) {
-    let charCode = text.charCodeAt(i);
-
-    // rückwärts verschieben
-    let newChar = charCode - shift;
-
-    result += String.fromCharCode(newChar);
+    result += String.fromCharCode(text.charCodeAt(i) - shift);
   }
 
   return result;
 }
 
-// =========================
-// NOTIZ SPEICHERN
-// =========================
-
+// Speichern
 function saveNote() {
-  let noteText = document.getElementById("noteInput").value;
+  let text = document.getElementById("noteInput").value;
   let password = document.getElementById("password").value;
 
-  if (noteText === "" || password === "") {
+  if (!text || !password) {
     alert("Bitte alles eingeben!");
     return;
   }
 
-  // verschlüsseln
-  let encryptedNote = encrypt(noteText, password);
+  let encrypted = encrypt(text, password);
 
-  // alte notizen laden
   let notes = JSON.parse(localStorage.getItem("notes") || "[]");
-
-  // neue hinzufügen
-  notes.push(encryptedNote);
-
-  // speichern
+  notes.push(encrypted);
   localStorage.setItem("notes", JSON.stringify(notes));
 
-  alert("Notiz gespeichert!");
-
-  document.getElementById("noteInput").value = "";
+  alert("Gespeichert!");
 }
 
-// =========================
-// NOTIZEN ANZEIGEN
-// =========================
-
+// Anzeigen
 function showNotes() {
   let password = document.getElementById("password").value;
   let container = document.getElementById("notesContainer");
@@ -133,25 +71,18 @@ function showNotes() {
 
   let notes = JSON.parse(localStorage.getItem("notes") || "[]");
 
-  for (let i = 0; i < notes.length; i++) {
-    let decrypted = decrypt(notes[i], password);
-
+  notes.forEach(n => {
     let div = document.createElement("div");
-    div.className = "note";
-    div.textContent = decrypted;
-
+    div.textContent = decrypt(n, password);
     container.appendChild(div);
-  }
+  });
 }
 
-// =========================
-// ALLE LÖSCHEN
-// =========================
-
+// Löschen
 function deleteNotes() {
   localStorage.removeItem("notes");
   document.getElementById("notesContainer").innerHTML = "";
-  alert("Alle Notizen gelöscht!");
+  alert("Alles gelöscht!");
 }
 
 </script>
