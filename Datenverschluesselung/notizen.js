@@ -1,99 +1,73 @@
-let cryptoKey;
+// =========================
+// VERSCHLÜSSELUNG
+// =========================
+function encrypt(text, password) {
+  let result = "";
+  let shift = password.length;
 
-async function getKey(password) {
+  for (let i = 0; i < text.length; i++) {
+    result += String.fromCharCode(text.charCodeAt(i) + shift);
+  }
 
-const enc = new TextEncoder();
-
-const keyMaterial = await crypto.subtle.importKey(
-"raw",
-enc.encode(password),
-{ name: "PBKDF2" },
-false,
-["deriveKey"]
-);
-
-return crypto.subtle.deriveKey(
-{
-name: "PBKDF2",
-salt: enc.encode("salt"),
-iterations: 100000,
-hash: "SHA-256"
-},
-keyMaterial,
-{ name: "AES-GCM", length: 256 },
-false,
-["encrypt","decrypt"]
-);
-
+  return result;
 }
 
-async function unlockNotes(){
+function decrypt(text, password) {
+  let result = "";
+  let shift = password.length;
 
-const password = document.getElementById("password").value;
+  for (let i = 0; i < text.length; i++) {
+    result += String.fromCharCode(text.charCodeAt(i) - shift);
+  }
 
-cryptoKey = await getKey(password);
-
-document.getElementById("notesArea").style.display = "block";
-
-loadNotes();
-
+  return result;
 }
 
-async function saveNotes(){
+// =========================
+// NOTIZ SPEICHERN
+// =========================
+function saveNote() {
+  let text = document.getElementById("noteInput").value;
+  let password = document.getElementById("password").value;
 
-const text = document.getElementById("notes").value;
+  if (!text || !password) {
+    alert("Bitte alles eingeben!");
+    return;
+  }
 
-const iv = crypto.getRandomValues(new Uint8Array(12));
+  let encrypted = encrypt(text, password);
 
-const encrypted = await crypto.subtle.encrypt(
-{ name:"AES-GCM", iv: iv },
-cryptoKey,
-new TextEncoder().encode(text)
-);
+  let notes = JSON.parse(localStorage.getItem("notes") || "[]");
+  notes.push(encrypted);
+  localStorage.setItem("notes", JSON.stringify(notes));
 
-const data = {
-
-iv: Array.from(iv),
-
-content: btoa(String.fromCharCode(...new Uint8Array(encrypted)))
-
-};
-
-localStorage.setItem("secureNotes", JSON.stringify(data));
-
-document.getElementById("status").textContent="Notizen verschlüsselt gespeichert.";
-
+  alert("Gespeichert!");
+  document.getElementById("noteInput").value = "";
 }
 
-async function loadNotes(){
+// =========================
+// NOTIZEN ANZEIGEN
+// =========================
+function showNotes() {
+  let password = document.getElementById("password").value;
+  let container = document.getElementById("notesContainer");
 
-const stored = localStorage.getItem("secureNotes");
+  container.innerHTML = "";
 
-if(!stored) return;
+  let notes = JSON.parse(localStorage.getItem("notes") || "[]");
 
-try{
-
-const data = JSON.parse(stored);
-
-const iv = new Uint8Array(data.iv);
-
-const encryptedBytes = Uint8Array.from(atob(data.content), c => c.charCodeAt(0));
-
-const decrypted = await crypto.subtle.decrypt(
-{ name:"AES-GCM", iv: iv },
-cryptoKey,
-encryptedBytes
-);
-
-const text = new TextDecoder().decode(decrypted);
-
-document.getElementById("notes").value = text;
-
-}
-catch{
-
-document.getElementById("status").textContent="❌ Falsches Passwort";
-
+  notes.forEach(n => {
+    let div = document.createElement("div");
+    div.textContent = decrypt(n, password);
+    container.appendChild(div);
+  });
 }
 
+// =========================
+// ALLE LÖSCHEN
+// =========================
+function deleteNotes() {
+  localStorage.removeItem("notes");
+  document.getElementById("notesContainer").innerHTML = "";
+  alert("Alles gelöscht!");
 }
