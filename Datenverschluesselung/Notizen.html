@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Notizen App mit Verschlüsselung</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    textarea, input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .note {
+      background: #444;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🔐 Notizen App</h1>
+
+<textarea id="noteInput" placeholder="Schreibe eine Notiz..."></textarea><br>
+<input id="password" placeholder="Passwort"><br>
+
+<button onclick="saveNote()">Speichern</button>
+<button onclick="showNotes()">Anzeigen</button>
+<button onclick="deleteNotes()">Alle löschen</button>
+
+<div id="notesContainer"></div>
+
+<script>
+
+// =========================
+// VERSCHLÜSSELUNG
+// =========================
+
+function encrypt(text, password) {
+  let result = "";
+
+  // wir nehmen die länge vom passwort als "key"
+  let shift = password.length;
+
+  for (let i = 0; i < text.length; i++) {
+    let charCode = text.charCodeAt(i);
+
+    // buchstabe verschieben
+    let newChar = charCode + shift;
+
+    result += String.fromCharCode(newChar);
+  }
+
+  return result;
+}
+
+function decrypt(text, password) {
+  let result = "";
+  let shift = password.length;
+
+  for (let i = 0; i < text.length; i++) {
+    let charCode = text.charCodeAt(i);
+
+    // rückwärts verschieben
+    let newChar = charCode - shift;
+
+    result += String.fromCharCode(newChar);
+  }
+
+  return result;
+}
+
+// =========================
+// NOTIZ SPEICHERN
+// =========================
+
+function saveNote() {
+  let noteText = document.getElementById("noteInput").value;
+  let password = document.getElementById("password").value;
+
+  if (noteText === "" || password === "") {
+    alert("Bitte alles eingeben!");
+    return;
+  }
+
+  // verschlüsseln
+  let encryptedNote = encrypt(noteText, password);
+
+  // alte notizen laden
+  let notes = JSON.parse(localStorage.getItem("notes") || "[]");
+
+  // neue hinzufügen
+  notes.push(encryptedNote);
+
+  // speichern
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+  alert("Notiz gespeichert!");
+
+  document.getElementById("noteInput").value = "";
+}
+
+// =========================
+// NOTIZEN ANZEIGEN
+// =========================
+
+function showNotes() {
+  let password = document.getElementById("password").value;
+  let container = document.getElementById("notesContainer");
+
+  container.innerHTML = "";
+
+  let notes = JSON.parse(localStorage.getItem("notes") || "[]");
+
+  for (let i = 0; i < notes.length; i++) {
+    let decrypted = decrypt(notes[i], password);
+
+    let div = document.createElement("div");
+    div.className = "note";
+    div.textContent = decrypted;
+
+    container.appendChild(div);
+  }
+}
+
+// =========================
+// ALLE LÖSCHEN
+// =========================
+
+function deleteNotes() {
+  localStorage.removeItem("notes");
+  document.getElementById("notesContainer").innerHTML = "";
+  alert("Alle Notizen gelöscht!");
+}
+
+</script>
+
+</body>
+</html>
