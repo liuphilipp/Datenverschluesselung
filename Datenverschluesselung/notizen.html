@@ -2,118 +2,74 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Notizen App</title>
-
-  <!-- Bootstrap (optional, aber du nutzt navbar Klassen) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <title>Notizen App mit Verschlüsselung</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .app {
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      width: 400px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      font-family: Arial;
+      background: #222;
+      color: white;
       text-align: center;
-      margin-top: 80px; /* wegen navbar */
+      padding: 20px;
     }
 
     textarea, input {
-      width: 100%;
+      width: 80%;
       padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-
-    textarea {
-      height: 100px;
-      resize: none;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
     }
 
     button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
-      background: #667eea;
+      border-radius: 8px;
+      background: #4CAF50;
       color: white;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #5a67d8;
-    }
-
-    #notesContainer {
-      margin-top: 15px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
     .note {
-      background: #f1f1f1;
+      background: #444;
+      margin: 10px;
       padding: 10px;
-      border-radius: 10px;
-      margin-top: 8px;
-      text-align: left;
+      border-radius: 8px;
     }
   </style>
 </head>
-
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="datenverschluesslung2.html">Datenverschlüsselung</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<h1>🔐 Notizen App</h1>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="datenverschluesslung2.html">Start</a></li>
-        <li class="nav-item"><a class="nav-link" href="symmetrisch.html">Symmetrisch</a></li>
-        <li class="nav-item"><a class="nav-link active" href="asymmetrisch.html">Asymmetrisch</a></li>
-        <li class="nav-item"><a class="nav-link" href="hybrid.html">Hybrid</a></li>
-        <li class="nav-item"><a class="nav-link" href="hash.html">Hash</a></li>
-        <li class="nav-item"><a class="nav-link" href="notizen.html">Notizenverschlüsselung</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<textarea id="noteInput" placeholder="Schreibe eine Notiz..."></textarea><br>
+<input id="password" placeholder="Passwort"><br>
 
-<div class="app">
-  <h2>🔐 Notizen</h2>
+<button onclick="saveNote()">Speichern</button>
+<button onclick="showNotes()">Anzeigen</button>
+<button onclick="deleteNotes()">Alle löschen</button>
 
-  <textarea id="noteInput" placeholder="Deine Notiz..."></textarea>
-  <input id="password" placeholder="Passwort">
-
-  <button onclick="saveNote()">Speichern</button>
-  <button onclick="showNotes()">Anzeigen</button>
-  <button onclick="deleteNotes()">Alle löschen</button>
-
-  <div id="notesContainer"></div>
-</div>
+<div id="notesContainer"></div>
 
 <script>
+
+// =========================
+// VERSCHLÜSSELUNG
+// =========================
+
 function encrypt(text, password) {
   let result = "";
+
+  // wir nehmen die länge vom passwort als "key"
   let shift = password.length;
 
   for (let i = 0; i < text.length; i++) {
-    result += String.fromCharCode(text.charCodeAt(i) + shift);
+    let charCode = text.charCodeAt(i);
+
+    // buchstabe verschieben
+    let newChar = charCode + shift;
+
+    result += String.fromCharCode(newChar);
   }
 
   return result;
@@ -124,30 +80,50 @@ function decrypt(text, password) {
   let shift = password.length;
 
   for (let i = 0; i < text.length; i++) {
-    result += String.fromCharCode(text.charCodeAt(i) - shift);
+    let charCode = text.charCodeAt(i);
+
+    // rückwärts verschieben
+    let newChar = charCode - shift;
+
+    result += String.fromCharCode(newChar);
   }
 
   return result;
 }
 
+// =========================
+// NOTIZ SPEICHERN
+// =========================
+
 function saveNote() {
-  let text = document.getElementById("noteInput").value;
+  let noteText = document.getElementById("noteInput").value;
   let password = document.getElementById("password").value;
 
-  if (!text || !password) {
+  if (noteText === "" || password === "") {
     alert("Bitte alles eingeben!");
     return;
   }
 
-  let encrypted = encrypt(text, password);
+  // verschlüsseln
+  let encryptedNote = encrypt(noteText, password);
 
+  // alte notizen laden
   let notes = JSON.parse(localStorage.getItem("notes") || "[]");
-  notes.push(encrypted);
+
+  // neue hinzufügen
+  notes.push(encryptedNote);
+
+  // speichern
   localStorage.setItem("notes", JSON.stringify(notes));
 
-  alert("Gespeichert!");
+  alert("Notiz gespeichert!");
+
   document.getElementById("noteInput").value = "";
 }
+
+// =========================
+// NOTIZEN ANZEIGEN
+// =========================
 
 function showNotes() {
   let password = document.getElementById("password").value;
@@ -157,23 +133,28 @@ function showNotes() {
 
   let notes = JSON.parse(localStorage.getItem("notes") || "[]");
 
-  notes.forEach(n => {
+  for (let i = 0; i < notes.length; i++) {
+    let decrypted = decrypt(notes[i], password);
+
     let div = document.createElement("div");
     div.className = "note";
-    div.textContent = decrypt(n, password);
+    div.textContent = decrypted;
+
     container.appendChild(div);
-  });
+  }
 }
+
+// =========================
+// ALLE LÖSCHEN
+// =========================
 
 function deleteNotes() {
   localStorage.removeItem("notes");
   document.getElementById("notesContainer").innerHTML = "";
   alert("Alle Notizen gelöscht!");
 }
-</script>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</script>
 
 </body>
 </html>
